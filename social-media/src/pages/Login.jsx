@@ -34,7 +34,7 @@ const Login = () => {
             <div className="p-2 bg-[#065ad8] rounded text-white">
               <TbSocial />
             </div>
-            <span className="text-2xl text-[#065ad8]" font-semibold>
+            <span className="text-2xl text-[#065ad8] font-semibold">
               ShareFun
             </span>
           </div>

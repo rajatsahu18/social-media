@@ -4,7 +4,6 @@ import { Home, Login, Profile, Register, ResetPassword } from "./pages";
 
 function Layout() {
   const { user } = useSelector((state) => state.user);
-  console.log("user", user);
   const location = useLocation();
 
   return user?.token ? (
