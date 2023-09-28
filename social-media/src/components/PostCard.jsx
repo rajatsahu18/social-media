@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { NoProfile } from "../assets";
 import moment from "moment";
+import { BiSolidLike, BiLike, BiComment } from "react-icons/bi";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 const PostCard = ({ post, user, deletePost, likePost }) => {
   const [showAll, setShowAll] = useState(0);
@@ -10,6 +12,10 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
   const [loading, setLoading] = useState(false);
   const [replyComments, setReplyComments] = useState(0);
   const [showComments, setShowComments] = useState(0);
+
+  const getComments = async () => {};
+
+  // const deletePost = async () => {};
 
   return (
     <div className="mb-2 bg-primary p-4 rounded-xl ">
@@ -68,6 +74,37 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
             alt="post_image"
             className="w-full mt-2 rounded-lg"
           />
+        )}
+      </div>
+
+      <div className="mt-4 flex justify-between items-center px-3 py-2 text-ascent-2 text-base border-t border-[#66666645]">
+        <p className="flex gap-2 items-center text-base cursor-pointer">
+          {post?.likes?.includes(user?._id) ? (
+            <BiSolidLike size={20} color="blue" />
+          ) : (
+            <BiLike size={20} />
+          )}
+          {post?.likes?.length} Likes
+        </p>
+
+        <p
+          className="flex gap-2 items-center text-base cursor-pointer"
+          onClick={() => {
+            setShowComments(showComments === post._id ? null : post._id);
+            getComments(post?._id);
+          }}
+        >
+          <BiComment size={20} />
+          {post?.comments?.length} Comments
+        </p>
+        {user?._id === post?.userId?._id && (
+          <div
+            className="flex gap-2 items-center text-base cursor-pointer"
+            onClick={() => deletePost(post?._id)}
+          >
+            <MdOutlineDeleteOutline size={20} />
+            <span>Delete</span>
+          </div>
         )}
       </div>
     </div>
