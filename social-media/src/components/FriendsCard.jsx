@@ -15,7 +15,7 @@ const FriendsCard = ({ friends }) => {
           {friends?.map((friend) => (
             <Link
               to={"/profile/" + friend?._id}
-              key={friend?.id}
+              key={friend?._id}
               className="w-full flex gap-4 items-center cursor-pointer"
             >
               <img
