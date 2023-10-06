@@ -10,6 +10,7 @@ import {
   likePostComment,
   commentPost,
   replyPostComment,
+  deletePost,
 } from "../controllers/postController.js";
 
 const router = express.Router();
@@ -33,5 +34,8 @@ router.post("/like-comment/:id/:rid", userAuth, likePostComment);
 router.post("/comment/:id", userAuth, commentPost);
 router.post("/reply-comment/:id", userAuth, replyPostComment);
 
+// delete post
+
+router.delete("/:id", userAuth, deletePost);
 
 export default router;
