@@ -8,20 +8,44 @@ import { BgImage } from "../assets";
 import { BsShare } from "react-icons/bs";
 import { ImConnection } from "react-icons/im";
 import { AiOutlineInteraction } from "react-icons/ai";
+import { apiRequest } from "../utils";
+import { UserLogin } from "../redux/userSlice";
 
 const Login = () => {
+
+  const [errMsg, setErrMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const [errMsg, setErrMsg] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const dispatch = useDispatch();
-
   const onSubmit = async(data) => {
+    setIsSubmitting(true)
 
+    try {
+      const res = await apiRequest({
+        url: "/auth/login",
+        data: data,
+        method: "POST"
+      })
+
+      if(res?.status === "failed") {
+        setErrMsg(res);
+      } else {
+        setErrMsg("")
+        const newData = { token: res?.token, ...res?.user };
+        dispatch(UserLogin(newData))
+        window.location.replace("/")
+      }
+      setIsSubmitting(false)
+    } catch (error) {
+      console.log(error)
+      setIsSubmitting(false)
+    }
   };
 
   return (

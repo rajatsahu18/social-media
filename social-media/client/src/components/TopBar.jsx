@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,6 +11,7 @@ import { BsMoon, BsSunFill } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { SetTheme } from "../redux/theme";
 import { Logout } from "../redux/userSlice";
+import { fetchPosts } from "../utils";
 
 const TopBar = () => {
   const { theme } = useSelector((state) => state.theme);
@@ -21,7 +24,9 @@ const TopBar = () => {
     formState: { errors },
   } = useForm();
 
-  const handleSearch = async (data) => {};
+  const handleSearch = async (data) => {
+    await fetchPosts(user.token, dispatch, "", data)
+  };
 
   const handleTheme = () => {
     const themeValue = theme === "light" ? "dark" : "light";

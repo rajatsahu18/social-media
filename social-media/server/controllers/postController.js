@@ -20,7 +20,7 @@ export const createPost = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Posts created successfully",
+      message: "Post created successfully",
       data: post,
     });
   } catch (error) {

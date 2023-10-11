@@ -5,6 +5,7 @@ import { sendVerificationEmail } from "../utils/sendEmail.js";
 export const register = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
+    //validate fields
   if (!(firstName || lastName || email || password)) {
     next("Provide Required Fields!");
     return;
@@ -25,6 +26,7 @@ export const register = async (req, res, next) => {
       password: hashedPassword,
     });
 
+    //send email verification to user
     sendVerificationEmail(user, res);
   } catch (error) {
     console.log(error);
@@ -59,7 +61,8 @@ export const login = async (req, res, next) => {
       );
       return;
     }
-
+    
+    // compare password
     const isMatch = await compareString(password, user?.password);
 
     if (!isMatch) {

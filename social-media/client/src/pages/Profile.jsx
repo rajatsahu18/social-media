@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -8,18 +11,42 @@ import {
   ProfileCard,
   TopBar,
 } from "../components";
-import { posts } from "../assets/data";
+import { deletePost, fetchPosts, getUserInfo, likePost } from "../utils";
 
 const Profile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  // const { posts } = useSelector((state) => state.posts);
+  const { posts } = useSelector((state) => state.posts);
   const [userInfo, setUserInfo] = useState(user);
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = () => {};
-  const handleLikePost = () => {};
+  const uri = "/posts/get-user-post/" + id;
+
+  const getUser = async () => {
+    const res = await getUserInfo(user?.token, id);
+    setUserInfo(res)
+  }
+
+  const getPosts = async () => {
+    await fetchPosts(user.token, dispatch, uri)
+    setLoading(false)
+  }
+
+  const handleDelete = async (id) => {
+    await deletePost(id, user.token);
+    await getPosts();
+  };
+  const handleLikePost = async (uri) => {
+    await likePost({ uri: uri, token: user?.token });
+
+    await getPosts();
+  };
+  useEffect(() => {
+    setLoading(true)
+    getUser();
+    getPosts();
+  }, [id])
 
   return (
     <>
@@ -68,25 +95,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-{/* <div className="w-full flex gap-2 lg:gap-4 pt-5 pb-10 h-full">
-  <div className="hidden w-1/4 h-full lg:flex flex-col gap-8 overflow-y-auto">
-    <FriendsCard friends={userInfo?.friends} />
-  </div>
-
-  <div className="w-full flex-col gap-2 lg:gap-4 pb-10 h-full">
-    <div className="w-full items-center justify-between border-b pb-5 border-[#66666645]">
-      <img
-        src={user?.profileUrl ?? NoProfile}
-        alt={user?.email}
-        className="relative w-full h-96 object-cover"
-      />
-      <img
-        src={user?.profileUrl ?? NoProfile}
-        alt={user?.email}
-        className="absolute left-1/3 bottom-1/2 w-36 h-36 border-[#000] object-cover rounded-full"
-      />
-    </div>
-    <div>3</div>
-  </div>
-</div> */}
