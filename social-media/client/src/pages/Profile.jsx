@@ -72,7 +72,7 @@ const Profile = () => {
                   key={post?._id}
                   post={post}
                   user={user}
-                  delete={handleDelete}
+                  deletePost={handleDelete}
                   likePost={handleLikePost}
                 />
               ))

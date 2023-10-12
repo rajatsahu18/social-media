@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 import TextInput from "./TextInput";
 import Loading from "./Loading";
 import CustomButton from "./CustomButton";
-import { postComments } from "../assets/data";
 import { apiRequest } from "../utils";
 
 const getPostComments = async (id) => {
@@ -52,7 +51,7 @@ const ReplyCard = ({ reply, user, handleLike }) => {
 
       <div className="ml-12">
         <p className="text-ascent-2">{reply?.comment}</p>
-        <div className="text-ascent-2 mt-2 flex gap-6">
+        <div className="text-ascent-2 mt-2 flex gap-6 cursor-pointer" onClick={handleLike}>
           {reply?.likes?.includes(user?._id) ? (
             <BiSolidLike size={20} color="blue" />
           ) : (
@@ -181,7 +180,7 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
   };
 
   return (
-    <div className="mb-2 bg-primary p-4 rounded-xl ">
+    <div className="mb-2 bg-primary p-4 rounded-xl">
       <div className="flex gap-3 items-center mb-2">
         <Link to={"/profile/" + post?.userId?._id}>
           <img

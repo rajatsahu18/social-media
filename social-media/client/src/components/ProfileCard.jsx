@@ -9,12 +9,14 @@ import { UpdateProfile } from "../redux/userSlice";
 import { BsBriefcase, BsFacebook, BsInstagram, BsPersonFillAdd, BsTwitter } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
 import moment from "moment";
+import EditProfile from "./EditProfile";
 
 const ProfileCard = ({ user }) => {
   const { user: data, edit } = useSelector((state) => state.user); // replace user with user:data
   const dispatch = useDispatch();
 
   return (
+    <>
     <div>
       <div className="w-full bg-primary flex flex-col items-center shadow-sm rounded-xl px-6 py-4">
         <div className="w-full flex items-center justify-between border-b pb-5 border-[#66666645]">
@@ -108,6 +110,8 @@ const ProfileCard = ({ user }) => {
         </div>
       </div>
     </div>
+    {edit && <EditProfile />}
+    </>
   );
 };
 

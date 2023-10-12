@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import { SetPosts } from "../redux/postSlice";
 
@@ -73,14 +74,14 @@ export const likePost = async ({ uri, token }) => {
   }
 };
 
-export const deletePost = async ({ id, token }) => {
+export const deletePost = async (id, token) => {
   try {
     const res = await apiRequest({
       url: "/posts/" + id,
       token: token,
       method: "DELETE",
     });
-    return // return res
+    return;
   } catch (error) {
     console.log(error);
   }
@@ -130,7 +131,7 @@ export const viewUserProfile = async (token, id) => {
       method: "POST",
       data: { id },
     });
-    
+
     return; // return res
   } catch (error) {
     console.log(error);

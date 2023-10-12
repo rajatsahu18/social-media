@@ -11,7 +11,7 @@ import { BsMoon, BsSunFill } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { SetTheme } from "../redux/theme";
 import { Logout } from "../redux/userSlice";
-import { fetchPosts } from "../utils";
+import { fetchPosts, getUsers } from "../utils";
 
 const TopBar = () => {
   const { theme } = useSelector((state) => state.theme);

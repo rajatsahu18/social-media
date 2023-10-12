@@ -34,7 +34,6 @@ const Home = () => {
   const [friendRequest, setFriendRequest] = useState([]);
   const [suggestedFriends, setSuggestedFriends] = useState([]);
   const [errMsg, setErrMsg] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [file, setFile] = useState(null);
   const [posting, setPosting] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -82,7 +81,6 @@ const Home = () => {
 
   const fetchPost = async () => {
     await fetchPosts(user?.token, dispatch);
-
     setLoading(false);
   };
 
@@ -145,6 +143,7 @@ const Home = () => {
       console.log(error);
     }
   };
+
   const getUser = async () => {
     const res = await getUserInfo(user?.token);
     const newData = { token: user?.token, ...res};
@@ -277,7 +276,7 @@ const Home = () => {
                   key={post?._id}
                   post={post}
                   user={user}
-                  delete={handleDelete}
+                  deletePost={handleDelete}
                   likePost={handleLikePost}
                 />
               ))
