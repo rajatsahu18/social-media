@@ -80,7 +80,7 @@ export const deletePost = async ({ id, token }) => {
       token: token,
       method: "DELETE",
     });
-    return; // return res
+    return // return res
   } catch (error) {
     console.log(error);
   }

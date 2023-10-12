@@ -9,14 +9,14 @@ import FriendRequest from "../models/friendRequest.js";
 export const verifyEmail = async (req, res) => {
   const { userId, token } = req.params;
   try {
-    const data = await Verification.findOne({ userId });
+    const result = await Verification.findOne({ userId });
 
     if (result) {
       const { expiresAt, token: hashedToken } = result;
 
       // token has expires
       if (expiresAt < Date.now()) {
-        await Verification.findOneAndDelete({ userId })
+        Verification.findOneAndDelete({ userId })
           .then(() => {
             Users.findOneAndDelete({ _id: userId })
               .then(() => {
@@ -53,6 +53,7 @@ export const verifyEmail = async (req, res) => {
                   );
                 });
             } else {
+              // invalid token
               const message = "Verification failed or link is invalid";
               res.redirect(`/users/verified?status=error&message=${message}`);
             }
@@ -63,7 +64,7 @@ export const verifyEmail = async (req, res) => {
           });
       }
     } else {
-      const message = "Invalid verification  link. Try again later";
+      const message = "Invalid verification link. Try again later";
       res.redirect(`/users/verified?status=error&message=${message}`);
     }
   } catch (error) {
@@ -80,7 +81,7 @@ export const requestPasswordReset = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         status: "FAILED",
-        message: "Email address not found",
+        message: "Email address not found.",
       });
     }
 
@@ -91,7 +92,7 @@ export const requestPasswordReset = async (req, res) => {
         return res.status(201).json({
           status: "PENDING",
           message:
-            "Reset password link has been already been sent to your email",
+            "Reset password link has been already been sent to your email.",
         });
       }
       await PasswordReset.findOneAndDelete({ email });
@@ -107,6 +108,7 @@ export const resetPassword = async (req, res) => {
   const { userId, token } = req.params;
 
   try {
+    // find record
     const user = await Users.findById(userId);
 
     if (!user) {
@@ -118,13 +120,13 @@ export const resetPassword = async (req, res) => {
 
     if (!resetPassword) {
       const message = "Invalid password reset link. Try again";
-      res.redirect(`/users/resetpassword?status=error&message=${message}`);
+      return res.redirect(`/users/resetpassword?status=error&message=${message}`);
     }
 
     const { expiresAt, token: resetToken } = resetPassword;
 
     if (expiresAt < Date.now()) {
-      const message = "Reset password link has expired. Please try again";
+      const message = "Reset Password link has expired. Please try again";
       res.redirect(`/users/resetpassword?status=error&message=${message}`);
     } else {
       const isMatch = await compareString(token, resetToken);
@@ -142,12 +144,12 @@ export const resetPassword = async (req, res) => {
   }
 };
 
-export const changePassword = async (req, res) => {
+export const changePassword = async (req, res, next) => {
   try {
     const { userId, password } = req.body;
     const hashedPassword = await hashString(password);
 
-    const user = await Users.findOneAndUpdate(
+    const user = await Users.findByIdAndUpdate(
       { _id: userId },
       { password: hashedPassword }
     );
@@ -155,9 +157,12 @@ export const changePassword = async (req, res) => {
     if (user) {
       await PasswordReset.findOneAndDelete({ userId });
 
-      const message = "Password successfully reset.";
-      res.redirect(`/users/resetpassword?status=success&message=${message}`);
-      return;
+      res.status(200).json({
+        ok: true,
+      });
+      // const message = "Password successfully reset.";
+      // res.redirect(`/users/resetpassword?status=success&message=${message}`);
+      // return;
     }
   } catch (error) {
     console.log(error);
@@ -203,7 +208,7 @@ export const updateUser = async (req, res, next) => {
     const { firstName, lastName, location, profileUrl, profession } = req.body;
 
     if (!(firstName || lastName || contact || profession || location)) {
-      next("Please provide all required fields!");
+      next("Please provide all required fields");
       return;
     }
 
@@ -241,7 +246,7 @@ export const updateUser = async (req, res, next) => {
   }
 };
 
-export const friendRequest = async (req, res) => {
+export const friendRequest = async (req, res, next) => {
   try {
     const { userId } = req.body.user;
 
@@ -295,7 +300,7 @@ export const getFriendRequest = async (req, res) => {
       requestStatus: "Pending",
     })
       .populate({
-        path: "requestForm",
+        path: "requestFrom",
         select: "firstName lastName profileUrl profession -password",
       })
       .limit(10)
@@ -317,14 +322,16 @@ export const getFriendRequest = async (req, res) => {
   }
 };
 
-export const acceptRequest = async (req, res) => {
+export const acceptRequest = async (req, res, next) => {
   try {
     const id = req.body.user.userId;
 
-    const { rid, status } = await FriendRequest.findById(rid);
+    const { rid, status } = req.body;
+
+    const requestExist = await FriendRequest.findById(rid);
 
     if (!requestExist) {
-      next("No Friend Request Found");
+      next("No Friend Request Found.");
       return;
     }
 

@@ -26,7 +26,7 @@ router.get("/reset-password/:userId/:token", resetPassword);
 router.post("/reset-password", changePassword);
 
 // user routes
-router.post("/get-user/:id", userAuth, getUser);
+router.post("/get-user/:id?", userAuth, getUser);
 router.put("/update-user", userAuth, updateUser);
 
 // friend request
@@ -36,16 +36,18 @@ router.post("/get-friend-request", userAuth, getFriendRequest);
 // accept or deny friend request
 router.post("/accept-request", userAuth, acceptRequest);
 
+// view profile
 router.post("/profile-view", userAuth, profileViews);
 
+// suggested friends
 router.post("/suggested-friends", userAuth, suggestedFriends);
 
 router.get("/verified", (req, res) => {
-  res.sendFile(path.join(__dirname, "./view/build", "index.html"));
+  res.sendFile(path.join(__dirname, "./views/build", "index.html"));
 });
 
 router.get("/resetpassword", (req, res) => {
-  res.sendFile(path.join(__dirname, "./view/build", "index.html"));
+  res.sendFile(path.join(__dirname, "./views/build", "index.html"));
 });
 
 export default router;

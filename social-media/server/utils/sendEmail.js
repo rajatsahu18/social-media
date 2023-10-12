@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
-import Verification from "../models/emailVerification.js";
 import { hashString } from "./index.js";
+import Verification from "../models/emailVerification.js";
 import PasswordReset from "../models/passwordReset.js";
 
 dotenv.config();
@@ -28,21 +28,20 @@ export const sendVerificationEmail = async (user, res) => {
     to: email,
     subject: "Email Verification",
     html: `<div
-        style='font-family: Arial, sans-serif; font-size: 20px; color: #333; background-color: #fff' > 
-        <h1 style = "color: rgb(8,56,188)"> Please verify your email address</h1>
+        style='font-family: Arial, sans-serif; font-size: 20px; color: #333; background-color: #f7f7f7; padding: 20px; border-radius: 5px;' > 
+        <h3 style="color: rgb(8, 56, 188)">Please verify your email address</h3>
         <hr>
         <h4>Hi ${lastName},</h4>
         <p>
            Please verify your email address so we can know that it's really you.
            <br>
-        <b>This link <br> expires in 1 hour</b>
-        </p>
+        <p>This link <b>expires in 1 hour</b></p>
         <br>
         <a href=${link}
-           style="color: #fff; padding: 14px; text-decoration: none; background-color: #000">
+           style="color: #fff; padding: 14px; text-decoration: none; background-color: #000;  border-radius: 8px; font-size: 18px;">Verify
            Email Address</a>
         </p>
-        <div style= "margin-top: 20px;">
+        <div style="margin-top: 20px;">
            <h5>Best Regards</h5>
            <h5>ShareFun team</h5>
         </div>
@@ -65,7 +64,7 @@ export const sendVerificationEmail = async (user, res) => {
           res.status(201).send({
             success: "PENDING",
             message:
-              "Verification email has been sent to your account. Check your email for further instructions",
+              "Verification email has been sent to your account. Check your email for further instructions.",
           });
         })
         .catch((err) => {
@@ -91,12 +90,12 @@ export const resetPasswordLink = async (user, res) => {
     from: AUTH_EMAIL,
     to: email,
     subject: "Password Reset",
-    html: `<p style="font-family: Arial,sans-serif; font-size:16px; color: #333; background: #546">
+    html: `<p style="font-family: Arial, sans-serif; font-size: 16px; color: #333; background-color: #f7f7f7; padding: 20px; border-radius: 5px;">
           Password reset link. Please click the link below to reset password. 
           <br>
-          <p style-"font-size: 18px;"><b>This link expires in 10 minutes</b></p>
-            </br>
-          <a href=${link} style='color: #fff' padding: 10px; text-decoration: none; background='#546'/> 
+          <p style="font-size: 18px;"><b>This link expires in 10 minutes</b></p>
+            <br>
+          <a href=${link} style="color: #fff; padding: 10px; text-decoration: none; background-color: #000;  border-radius: 8px; font-size: 18px; ">Reset Password</a>.
      </p>`,
   };
 
@@ -109,24 +108,24 @@ export const resetPasswordLink = async (user, res) => {
       token: hashedToken,
       createdAt: Date.now(),
       expiresAt: Date.now() + 600000,
-    })
-    
-    if(resetEmail) {
+    });
+
+    if (resetEmail) {
       transporter
-      .sendMail(mailOptions)
-      .then(() => {
-        res.status(201).send({
-          success: "PENDING",
-          message: "Reset Password Link has been sent to your account"
+        .sendMail(mailOptions)
+        .then(() => {
+          res.status(201).send({
+            success: "PENDING",
+            message: "Reset Password Link has been sent to your account",
+          });
         })
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(404).json({message: "Something went wrong"})
-      })
+        .catch((err) => {
+          console.log(err);
+          res.status(404).json({ message: "Something went wrong" });
+        });
     }
-  } catch(error) {
+  } catch (error) {
     console.log(error);
-    res.status(404).json({message: "Something went wrong"})
+    res.status(404).json({ message: "Something went wrong" });
   }
 };
