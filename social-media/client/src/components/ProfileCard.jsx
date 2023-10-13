@@ -13,7 +13,6 @@ import EditProfile from "./EditProfile";
 const ProfileCard = ({ user, handleFriendRequest }) => {
   const { user: data, edit } = useSelector((state) => state.user); // replace user with user:data
   const dispatch = useDispatch();
-  const [friend, setFriend] = useState(false);
 
   return (
     <>

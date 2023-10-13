@@ -13,15 +13,9 @@ import {
   TextInput,
   TopBar,
 } from "../components";
-import { Link } from "react-router-dom";
 import { NoProfile } from "../assets";
-import {
-  BsFiletypeGif,
-  BsPerson,
-  BsPersonFillAdd,
-  BsPersonPlus,
-} from "react-icons/bs";
-import { BiHome, BiImages, BiSolidVideo } from "react-icons/bi";
+import { BsFiletypeGif } from "react-icons/bs";
+import { BiImages, BiSolidVideo } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import {
   apiRequest,
@@ -30,12 +24,9 @@ import {
   getUserInfo,
   handleFileUpload,
   likePost,
-  sendFriendRequest,
 } from "../utils";
 import { UserLogin } from "../redux/userSlice";
 import FriendRequests from "../components/FriendRequests";
-import { LiaUserFriendsSolid } from "react-icons/lia";
-import { IoMdNotificationsOutline } from "react-icons/io";
 
 const Home = () => {
   const { user, edit } = useSelector((state) => state.user);
@@ -116,7 +107,8 @@ const Home = () => {
 
   return (
     <>
-      <div className="home w-full px-0 lg:px-10 2xl:px-40 bg-bgColor h-screen overflow-hidden">
+      <div className="home w-full px-0 lg:px-10 2xl:px-40 bg-bgColor h-screen overflow-y-auto">
+        <TopBar />
         <div className="w-full flex gap-2 lg:gap-4 pt-5 pb-10 h-full">
           {/* LEFT */}
           <div className="hidden w-1/3 lg:w-1/4 h-full md:flex flex-col gap-6 overflow-y-auto">

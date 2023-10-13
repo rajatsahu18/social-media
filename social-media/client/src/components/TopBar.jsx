@@ -2,7 +2,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { SlSocialSkype } from "react-icons/sl";
 import TextInput from "./TextInput";
 import CustomButton from "./CustomButton";
 import { useForm } from "react-hook-form";
@@ -40,10 +39,10 @@ const TopBar = () => {
         <Link to="/" className="flex gap-2 items-center">
           <div className="p-1 md:p-2 bg-[#1877F2] rounded text-white">
             {/* <SlSocialSkype /> */}
-            CN
+            SG
           </div>
           <span className="text-xl md:text-2xl text-[#1877F2] font-semibold">
-            Cartoon Network
+            Socialgram
           </span>
         </Link>
 

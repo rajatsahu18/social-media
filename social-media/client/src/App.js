@@ -5,7 +5,6 @@ import {
   SuggestedFriends,
   FriendRequests,
   Notifications,
-  TopBar,
 } from "./components";
 
 function Layout() {
@@ -21,19 +20,10 @@ function Layout() {
 
 function App() {
   const { theme } = useSelector((state) => state.theme);
-  const { user } = useSelector((state) => state.user);
 
   return (
     <>
       <div data-theme={theme} className="w-full min-h-[100vh]">
-        {user?.token ? (
-          <div className="topbar w-full px-0 lg:px-10 2xl:px-40 bg-bgColor">
-          <TopBar />
-        </div>
-        ) : (
-          ""
-        )}
-
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
