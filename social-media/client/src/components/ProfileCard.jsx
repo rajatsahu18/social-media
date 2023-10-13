@@ -1,19 +1,19 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { NoProfile } from "../assets";
 import { LiaEditSolid } from "react-icons/lia";
 import { UpdateProfile } from "../redux/userSlice";
-import { BsBriefcase, BsFacebook, BsInstagram, BsPersonFillAdd, BsTwitter } from "react-icons/bs";
+import { BsBriefcase, BsFacebook, BsFillPersonCheckFill, BsInstagram, BsTwitter } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
 import moment from "moment";
 import EditProfile from "./EditProfile";
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, handleFriendRequest }) => {
   const { user: data, edit } = useSelector((state) => state.user); // replace user with user:data
   const dispatch = useDispatch();
+  const [friend, setFriend] = useState(false);
 
   return (
     <>
@@ -41,15 +41,15 @@ const ProfileCard = ({ user }) => {
             {user?._id === data?._id ? (
               <LiaEditSolid
                 size={22}
-                className="text-blue cursor-pointer"
+                className="text-[#1877F2] cursor-pointer"
                 onClick={() => dispatch(UpdateProfile(true))}
               />
             ) : (
               <button
-                className="bg-[#0444a430] text-sm text-white p-1 rounded"
+                className=" text-sm text-[#1877F2] p-1 rounded"
                 onClick={() => {}}
               >
-                <BsPersonFillAdd size={20} className="text-[#0f52b6]" />
+                <BsFillPersonCheckFill size={20} className="text-[#0f52b6]" />
               </button>
             )}
           </div>
@@ -77,7 +77,7 @@ const ProfileCard = ({ user }) => {
             <span className="text-ascent-1 text-lg">{user?.views?.length}</span>
           </div>
 
-          <span className="text-base text-blue">
+          <span className="text-base text-[#1877F2]">
             {user?.verified ? "Verified Account" : "Not Verified"}
           </span>
 

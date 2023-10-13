@@ -51,7 +51,10 @@ const ReplyCard = ({ reply, user, handleLike }) => {
 
       <div className="ml-12">
         <p className="text-ascent-2">{reply?.comment}</p>
-        <div className="text-ascent-2 mt-2 flex gap-6 cursor-pointer" onClick={handleLike}>
+        <div
+          className="text-ascent-2 mt-2 flex gap-6 cursor-pointer"
+          onClick={handleLike}
+        >
           {reply?.likes?.includes(user?._id) ? (
             <BiSolidLike size={20} color="blue" />
           ) : (
@@ -106,7 +109,7 @@ const CommentForm = ({ user, id, replyAt, getComments }) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -199,8 +202,8 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
             </Link>
             <span className="text-ascent-2">{post?.userId?.location}</span>
             <span className="md:hidden flex text-ascent-2 text-xs">
-            {moment(post?.createdAt ?? "2023-09-28").fromNow()}
-          </span>
+              {moment(post?.createdAt ?? "2023-09-28").fromNow()}
+            </span>
           </div>
 
           <span className="hidden md:flex text-ascent-2">
@@ -313,10 +316,11 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
                 <div className="ml-12">
                   <p className="text-ascent-2">{comment?.comment}</p>
                   <div className="mt-2 flex gap-6">
-                    <p className="flex gap-2 items-center text-base text-ascent-2 cursor-pointer"
-                    onClick={() => {
-                      handleLike("/posts/like-comment/" + comment?._id)
-                    }}
+                    <p
+                      className="flex gap-2 items-center text-base text-ascent-2 cursor-pointer"
+                      onClick={() => {
+                        handleLike("/posts/like-comment/" + comment?._id);
+                      }}
                     >
                       {comment?.likes?.includes(user?._id) ? (
                         <BiSolidLike size={20} color="blue" />
@@ -376,7 +380,6 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
                         }
                       />
                     ))}
-                    
                 </div>
               </div>
             ))

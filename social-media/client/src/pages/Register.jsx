@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { TbSocial } from "react-icons/tb";
 import { CustomButton, Loading, TextInput } from "../components";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { BgImage } from "../assets";
 import { BsShare } from "react-icons/bs";
 import { ImConnection } from "react-icons/im";
@@ -20,30 +18,29 @@ const Register = () => {
 
   const [errMsg, setErrMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
       const res = await apiRequest({
         url: "/auth/register",
         data: data,
-        method: "POST"
-      })
+        method: "POST",
+      });
 
-      if(res?.status === "failed") {
+      if (res?.status === "failed") {
         setErrMsg(res);
       } else {
-        setErrMsg(res)
+        setErrMsg(res);
         setTimeout(() => {
-          window.location.replace("/login")
-        }, 5000)
+          window.location.replace("/login");
+        }, 5000);
       }
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   };
 
@@ -54,11 +51,9 @@ const Register = () => {
 
         <div className="w-full lg:w-1/2 h-full p-10 2xl:px-20 flex flex-col justify-center">
           <div className="w-full flex gap-2 items-center mb-6">
-            <div className="p-2 bg-[#065ad8] rounded text-white">
-              <TbSocial />
-            </div>
-            <span className="text-2xl text-[#065ad8] font-semibold">
-              ShareFun
+            <div className="p-2 bg-[#1877F2] rounded text-white">CN</div>
+            <span className="text-2xl text-[#1877F2] font-semibold">
+              Cartoon Network
             </span>
           </div>
           <p className="text-ascent-1 text-base font-semibold">
@@ -138,7 +133,7 @@ const Register = () => {
                 }
               />
             </div>
-           
+
             {errMsg?.message && (
               <span
                 className={`text-sm ${
@@ -156,20 +151,26 @@ const Register = () => {
             ) : (
               <CustomButton
                 type="submit"
-                containerStyles={`inline-flex justify-center rounded-md bg-blue px-8 py-3 text-sm font-medium text-white outline-none`}
+                containerStyles={`inline-flex justify-center rounded-md bg-[#42B72A] px-8 py-3 text-sm font-medium text-white outline-none`}
                 title="Create Account"
               />
             )}
           </form>
 
           <p className="text-ascent-2 text-sm text-center">
-            Already have an account? <Link to="/login" className="text-[#065ad8] font-semibold ml-2 cursor-pointer">Login</Link>
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-[#1877F2] font-semibold ml-2 cursor-pointer"
+            >
+              Login
+            </Link>
           </p>
         </div>
 
         {/* right */}
 
-        <div className="hidden w-1/2 h-full lg:flex flex-col items-center justify-center bg-blue">
+        <div className="hidden w-1/2 h-full lg:flex flex-col items-center justify-center bg-[#1877F2]">
           <div className="relative w-full flex items-center justify-center">
             <img
               src={BgImage}

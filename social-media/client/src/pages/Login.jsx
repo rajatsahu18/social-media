@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { TbSocial } from "react-icons/tb";
 import { CustomButton, Loading, TextInput } from "../components";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -12,7 +11,6 @@ import { apiRequest } from "../utils";
 import { UserLogin } from "../redux/userSlice";
 
 const Login = () => {
-
   const [errMsg, setErrMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
@@ -23,28 +21,28 @@ const Login = () => {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const onSubmit = async(data) => {
-    setIsSubmitting(true)
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
 
     try {
       const res = await apiRequest({
         url: "/auth/login",
         data: data,
-        method: "POST"
-      })
+        method: "POST",
+      });
 
-      if(res?.status === "failed") {
+      if (res?.status === "failed") {
         setErrMsg(res);
       } else {
-        setErrMsg("")
+        setErrMsg("");
         const newData = { token: res?.token, ...res?.user };
-        dispatch(UserLogin(newData))
-        window.location.replace("/")
+        dispatch(UserLogin(newData));
+        window.location.replace("/");
       }
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     } catch (error) {
-      console.log(error)
-      setIsSubmitting(false)
+      console.log(error);
+      setIsSubmitting(false);
     }
   };
 
@@ -55,11 +53,9 @@ const Login = () => {
 
         <div className="w-full lg:w-1/2 h-full p-10 2xl:px-20 flex flex-col justify-center">
           <div className="w-full flex gap-2 items-center mb-6">
-            <div className="p-2 bg-[#065ad8] rounded text-white">
-              <TbSocial />
-            </div>
-            <span className="text-2xl text-[#065ad8] font-semibold">
-              ShareFun
+            <div className="p-2 bg-[#1877F2] rounded text-white">CN</div>
+            <span className="text-2xl text-[#1877F2] font-semibold">
+              Cartoon Network
             </span>
           </div>
           <p className="text-ascent-1 text-base font-semibold">
@@ -98,7 +94,7 @@ const Login = () => {
             />
             <Link
               to="/reset-password"
-              className="text-sm text-right text-blue font-semibold"
+              className="text-sm text-right text-[#1877F2] font-semibold"
             >
               Forgot Password ?
             </Link>
@@ -119,20 +115,26 @@ const Login = () => {
             ) : (
               <CustomButton
                 type="submit"
-                containerStyles={`inline-flex justify-center rounded-md bg-blue px-8 py-3 text-sm font-medium text-white outline-none`}
+                containerStyles={`inline-flex justify-center rounded-md bg-[#42B72A] px-8 py-3 text-sm font-medium text-white outline-none`}
                 title="Login"
               />
             )}
           </form>
 
           <p className="text-ascent-2 text-sm text-center">
-            Don't have an account? <Link to="/register" className="text-[#065ad8] font-semibold ml-2 cursor-pointer">Create Account</Link>
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-[#1877F2] font-semibold ml-2 cursor-pointer"
+            >
+              Create Account
+            </Link>
           </p>
         </div>
 
         {/* right */}
 
-        <div className="hidden w-1/2 h-full lg:flex flex-col items-center justify-center bg-blue">
+        <div className="hidden w-1/2 h-full lg:flex flex-col items-center justify-center bg-[#1877F2]">
           <div className="relative w-full flex items-center justify-center">
             <img
               src={BgImage}

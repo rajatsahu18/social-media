@@ -6,6 +6,9 @@ import ProfileCard from "./ProfileCard";
 import FriendsCard from "./FriendsCard";
 import PostCard from "./PostCard";
 import EditProfile from "./EditProfile";
+import SuggestedFriends from "./SuggestedFriends"
+import FriendRequests from "./FriendRequests"
+import Notifications from "./Notifications"
 
 export {
   TextInput,
@@ -16,4 +19,7 @@ export {
   FriendsCard,
   PostCard,
   EditProfile,
+  SuggestedFriends,
+  FriendRequests,
+  Notifications,
 };
