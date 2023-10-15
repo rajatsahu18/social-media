@@ -4,6 +4,7 @@ import { user } from "../assets/data";
 const initialState = {
   user: JSON.parse(window?.localStorage.getItem("user")) ?? user,
   edit: false,
+  friendRequestSend : false,
 };
 
 const userSlice = createSlice({
@@ -21,8 +22,14 @@ const userSlice = createSlice({
     updateProfile(state, action) {
       state.edit = action.payload;
     },
+    setFriendRequestSend : (state) => {
+      state.friendRequestSend = !state.friendRequestSend;
+    }
   },
 });
+
+export const { setFriendRequestSend } = userSlice.actions;
+export const selectButtonState = state => state.user.friendRequestSend;
 export default userSlice.reducer;
 
 export function UserLogin(user) {

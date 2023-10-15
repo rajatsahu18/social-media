@@ -56,7 +56,7 @@ const ReplyCard = ({ reply, user, handleLike }) => {
           onClick={handleLike}
         >
           {reply?.likes?.includes(user?._id) ? (
-            <BiSolidLike size={20} color="blue" />
+            <BiSolidLike size={20} color="#1877F2" />
           ) : (
             <BiLike size={20} />
           )}
@@ -251,7 +251,7 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
           onClick={() => handleLike("/posts/like/" + post?._id)}
         >
           {post?.likes?.includes(user?._id) ? (
-            <BiSolidLike size={20} color="blue" />
+            <BiSolidLike size={20} color="#1877F2" />
           ) : (
             <BiLike size={20} />
           )}
@@ -323,7 +323,7 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
                       }}
                     >
                       {comment?.likes?.includes(user?._id) ? (
-                        <BiSolidLike size={20} color="blue" />
+                        <BiSolidLike size={20} color="#1877F2" />
                       ) : (
                         <BiLike size={20} />
                       )}

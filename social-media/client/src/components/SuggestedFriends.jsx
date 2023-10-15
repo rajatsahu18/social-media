@@ -4,14 +4,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { NoProfile } from "../assets";
 import { apiRequest, sendFriendRequest } from "../utils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "./CustomButton";
 import TopBar from "./TopBar";
+import { selectButtonState, setFriendRequestSend } from "../redux/userSlice";
 
 const SuggestedFriends = () => {
   const [suggestedFriends, setSuggestedFriends] = useState([]);
   const { user } = useSelector((state) => state.user);
-  const [requestSend, setRequestSend] = useState(false);
+  const dispatch = useDispatch()
+  const requestSend = useSelector(selectButtonState)
 
   const fetchSuggestedFriends = async () => {
     try {
@@ -29,7 +31,7 @@ const SuggestedFriends = () => {
   const handleFriendRequest = async (id) => {
     try {
       const res = await sendFriendRequest(user.token, id);
-      setRequestSend(true);
+      dispatch(setFriendRequestSend())
       await fetchSuggestedFriends();
     } catch (error) {
       console.log(error);

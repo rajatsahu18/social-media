@@ -9694,7 +9694,7 @@
         v = u((0, e.useState)(null), 2),
         g = v[0],
         y = v[1],
-        b = "https://codewave-socialmedia.netlify.app/login",
+        b = "https://socialgram-network.netlify.app/login",
         w = (function () {
           var e,
             t =
@@ -9726,7 +9726,7 @@
                             (e.prev = 8),
                             (e.next = 11),
                             fetch(
-                              "https://mernstack-socialmedia.onrender.com/users/reset-password",
+                              "https://mernstack-socialmedia-8a38.onrender.com/users/reset-password",
                               {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },

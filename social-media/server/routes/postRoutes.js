@@ -19,7 +19,7 @@ const router = express.Router();
 router.post("/create-post", userAuth, createPost);
 
 // get posts
-router.post("/", userAuth, getPosts);
+router.post("/", userAuth, getPosts); // to show feeds
 router.post("/:id", userAuth, getPost);
 
 router.post("/get-user-post/:id", userAuth, getUserPost);

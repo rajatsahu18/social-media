@@ -57,14 +57,14 @@ export const getPosts = async (req, res, next) => {
       return friends.includes(post?.userId?._id.toString());
     });
 
-    const otherPosts = posts?.filter(
-      (post) => !friends.includes(post?.user?._id.toString())
-    );
+    // const otherPosts = posts?.filter(
+    //   (post) => !friends.includes(post?.user?._id.toString())
+    // );
 
     let postsRes = null;
 
     if (friendsPosts?.length > 0) {
-      postsRes = search ? friendsPosts : [...friendsPosts, ...otherPosts];
+      postsRes = search ? friendsPosts : [...friendsPosts];
     } else {
       postsRes = posts;
     }
@@ -84,10 +84,12 @@ export const getPost = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const post = await Posts.findById(id).populate({
-      path: "userId",
-      select: "firstName lastName location profileUrl -password",
-    });
+    const post = await Posts.findById(id)
+      .populate({
+        path: "userId",
+        select: "firstName lastName location profileUrl -password",
+      })
+      .sort({ _id: -1 });
 
     res.status(200).json({
       success: true,
