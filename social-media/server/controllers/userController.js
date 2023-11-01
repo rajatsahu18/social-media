@@ -417,3 +417,35 @@ export const suggestedFriends = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const searchUsers = async (req, res) => {
+  try {
+    const { firstName, lastName } = req.query;
+
+    let query = {};
+
+    // Check if firstName and/or lastName parameters are provided
+    if (firstName) {
+      query.firstName = { $regex: new RegExp(firstName, "i") }; // Case-insensitive regex match for firstName
+    }
+
+    if (lastName) {
+      query.lastName = { $regex: new RegExp(lastName, "i") }; // Case-insensitive regex match for lastName
+    }
+
+    // Use the query object to find users matching the search criteria
+    const users = await Users.find(query).select("firstName lastName profileUrl profession");
+
+    res.status(200).json({
+      success: true,
+      data: users,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error: error.message,
+    });
+  }
+};

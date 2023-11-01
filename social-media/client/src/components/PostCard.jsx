@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { NoProfile } from "../assets";
 import moment from "moment";
@@ -11,6 +11,8 @@ import TextInput from "./TextInput";
 import Loading from "./Loading";
 import CustomButton from "./CustomButton";
 import { apiRequest } from "../utils";
+import like from "../assets/facebook_likes.mp3"
+import comment from "../assets/facebook_comments.mp3"
 
 const getPostComments = async (id) => {
   try {
@@ -69,6 +71,7 @@ const ReplyCard = ({ reply, user, handleLike }) => {
 const CommentForm = ({ user, id, replyAt, getComments }) => {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+  const commentSound = useRef(new Audio(comment));
 
   const {
     register,
@@ -96,7 +99,7 @@ const CommentForm = ({ user, id, replyAt, getComments }) => {
         token: user?.token,
         method: "POST",
       });
-
+      commentSound.current.play()
       if (res?.status === "failed") {
         setErrMsg(res);
       } else {
@@ -168,11 +171,11 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
   const [loading, setLoading] = useState(false);
   const [replyComments, setReplyComments] = useState(0);
   const [showComments, setShowComments] = useState(0);
+  const likeSound = useRef(new Audio(like));
 
   const getComments = async (id) => {
     setReplyComments(0);
     const result = await getPostComments(id);
-
     setComments(result);
     setLoading(false);
   };
@@ -180,6 +183,7 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
   const handleLike = async (uri) => {
     await likePost(uri);
     await getComments(post?._id);
+    likeSound.current.play()
   };
 
   return (

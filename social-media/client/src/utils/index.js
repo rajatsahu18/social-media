@@ -139,3 +139,17 @@ export const viewUserProfile = async (token, id) => {
     console.log(error);
   }
 };
+
+export const searchUsers = async (token, firstName, lastName) => {
+  try {
+    const res = await apiRequest({
+      url: `/users/search?firstName=${firstName}`,
+      token: token,
+      method: "GET",
+    });
+
+    return res?.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

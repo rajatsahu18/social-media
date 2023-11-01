@@ -9,6 +9,7 @@ import {
   profileViews,
   requestPasswordReset,
   resetPassword,
+  searchUsers,
   suggestedFriends,
   updateUser,
   verifyEmail,
@@ -49,5 +50,7 @@ router.get("/verified", (req, res) => {
 router.get("/resetpassword", (req, res) => {
   res.sendFile(path.join(__dirname, "./views/build", "index.html"));
 });
+
+router.get("/users/search", userAuth, searchUsers);
 
 export default router;

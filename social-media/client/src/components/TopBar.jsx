@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import TextInput from "./TextInput";
 import CustomButton from "./CustomButton";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { BsMoon, BsPerson, BsPersonPlus, BsSun } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { SetTheme } from "../redux/theme";
 import { Logout } from "../redux/userSlice";
-import { fetchPosts, getUsers } from "../utils";
+import { fetchPosts } from "../utils";
 import { BiHome } from "react-icons/bi";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 
@@ -31,6 +31,10 @@ const TopBar = () => {
   const handleTheme = () => {
     const themeValue = theme === "light" ? "dark" : "light";
     dispatch(SetTheme(themeValue));
+  };
+
+  const isActive = (path) => {
+    return window.location.pathname === path ? { color: "#1877F2" } : null;
   };
 
   return (
@@ -79,21 +83,37 @@ const TopBar = () => {
         </div>
       </div>
       <div className="topbar lg:hidden w-full flex items-center justify-between py-3 md:py-6 px-8 bg-secondary">
-        <Link to="/" className="text-ascent-2">
+        <NavLink exact to="/" className="text-ascent-2" style={isActive("/")}>
           <BiHome size={25} />
-        </Link>
-        <Link to="/friend-request" className="text-ascent-2">
+        </NavLink>
+        <NavLink
+          to="/friend-request"
+          className="text-ascent-2"
+          style={isActive("/friend-request")}
+        >
           <LiaUserFriendsSolid size={25} />
-        </Link>
-        <Link to="/suggested-friends" className="text-ascent-2">
+        </NavLink>
+        <NavLink
+          to="/suggested-friends"
+          className="text-ascent-2"
+          style={isActive("/suggested-friends")}
+        >
           <BsPersonPlus size={25} />
-        </Link>
-        <Link to="/notifications" className="text-ascent-2">
+        </NavLink>
+        <NavLink
+          to="/notifications"
+          className="text-ascent-2"
+          style={isActive("/notifications")}
+        >
           <IoMdNotificationsOutline size={25} />
-        </Link>
-        <Link to={"/profile/" + user?._id} className="text-ascent-2">
+        </NavLink>
+        <NavLink
+          to={"/profile/" + user?._id}
+          className="text-ascent-2"
+          style={isActive(`/profile/${user?._id}`)}
+        >
           <BsPerson size={25} />
-        </Link>
+        </NavLink>
       </div>
     </>
   );

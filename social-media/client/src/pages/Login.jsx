@@ -3,7 +3,7 @@ import { CustomButton, Loading, TextInput } from "../components";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { BgImage } from "../assets";
+import { Tomjerry } from "../assets";
 import { BsShare } from "react-icons/bs";
 import { ImConnection } from "react-icons/im";
 import { AiOutlineInteraction } from "react-icons/ai";
@@ -137,7 +137,7 @@ const Login = () => {
         <div className="hidden w-1/2 h-full lg:flex flex-col items-center justify-center bg-[#1877F2]">
           <div className="relative w-full flex items-center justify-center">
             <img
-              src={BgImage}
+              src={Tomjerry}
               alt="Bg_Image"
               className="w-48 2xl:w-64 h-48 2xl:h-64 rounded-full object-cover"
             />

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   CustomButton,
@@ -27,6 +27,7 @@ import {
 } from "../utils";
 import { UserLogin } from "../redux/userSlice";
 import FriendRequests from "../components/FriendRequests";
+import post from "../assets/facebook_post.mp3"
 
 const Home = () => {
   const { user, edit } = useSelector((state) => state.user);
@@ -35,6 +36,7 @@ const Home = () => {
   const [file, setFile] = useState(null);
   const [posting, setPosting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const postSound = useRef(new Audio(post));
 
   const dispatch = useDispatch();
   const {
@@ -59,7 +61,7 @@ const Home = () => {
         token: user?.token,
         method: "POST",
       });
-
+      
       if (res?.status === "failed") {
         setErrMsg(res);
       } else {
@@ -71,6 +73,9 @@ const Home = () => {
         await fetchPost();
       }
       setPosting(false);
+      postSound.current.play()
+
+
     } catch (error) {
       console.log(error);
       setPosting(false);
@@ -84,7 +89,6 @@ const Home = () => {
 
   const handleLikePost = async (uri) => {
     await likePost({ uri: uri, token: user?.token });
-
     await fetchPost();
   };
 

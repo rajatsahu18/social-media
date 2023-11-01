@@ -1,4 +1,6 @@
 import NoProfile from "./userprofile.png";
-import BgImage from "./img.jpeg";
+import Bob from "./bobusingfb.jpeg";
+import Tomjerry from "./tomjerryusingfb.jpeg";
 
-export { NoProfile, BgImage };
+
+export { NoProfile, Bob, Tomjerry };
