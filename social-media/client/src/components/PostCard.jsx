@@ -4,15 +4,15 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { NoProfile } from "../assets";
 import moment from "moment";
-import { BiSolidLike, BiLike, BiComment } from "react-icons/bi";
+import { BiSolidLike, BiLike, BiComment, BiShare } from "react-icons/bi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import TextInput from "./TextInput";
 import Loading from "./Loading";
 import CustomButton from "./CustomButton";
 import { apiRequest } from "../utils";
-import like from "../assets/facebook_likes.mp3"
-import comment from "../assets/facebook_comments.mp3"
+import like from "../assets/facebook_likes.mp3";
+import comment from "../assets/facebook_comments.mp3";
 
 const getPostComments = async (id) => {
   try {
@@ -99,7 +99,7 @@ const CommentForm = ({ user, id, replyAt, getComments }) => {
         token: user?.token,
         method: "POST",
       });
-      commentSound.current.play()
+      commentSound.current.play();
       if (res?.status === "failed") {
         setErrMsg(res);
       } else {
@@ -183,7 +183,7 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
   const handleLike = async (uri) => {
     await likePost(uri);
     await getComments(post?._id);
-    likeSound.current.play()
+    likeSound.current.play();
   };
 
   return (
@@ -210,9 +210,22 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
             </span>
           </div>
 
-          <span className="hidden md:flex text-ascent-2">
-            {moment(post?.createdAt ?? "2023-09-28").fromNow()}
-          </span>
+          <div className="flex gap-3">
+            <span className="hidden md:flex text-ascent-2">
+              {moment(post?.createdAt ?? "2023-09-28").fromNow()}
+            </span>
+
+            <span>
+              {user?._id === post?.userId?._id && (
+                <div
+                  className="flex gap-2 items-center text-ascent-2 text-base cursor-pointer"
+                  onClick={() => deletePost(post?._id)}
+                >
+                  <MdOutlineDeleteOutline size={20} />
+                </div>
+              )}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -274,15 +287,13 @@ const PostCard = ({ post, user, deletePost, likePost }) => {
           <BiComment size={20} />
           {post?.comments?.length} Comments
         </p>
-        {user?._id === post?.userId?._id && (
-          <div
-            className="flex gap-2 items-center text-base cursor-pointer"
-            onClick={() => deletePost(post?._id)}
-          >
-            <MdOutlineDeleteOutline size={20} />
-            <span>Delete</span>
-          </div>
-        )}
+
+        {/* Share */}
+
+        <p className="flex gap-2 items-center text-base cursor-pointer">
+          <BiShare size={20} />
+          <span>Share</span>
+        </p>
       </div>
 
       {showComments === post?._id && (
